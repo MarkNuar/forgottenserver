@@ -37,6 +37,7 @@
 #include "script.h"
 #include <fstream>
 #include <fmt/format.h>
+#include <boost/filesystem.hpp>
 #if __has_include("gitmetadata.h")
 	#include "gitmetadata.h"
 #endif
@@ -79,6 +80,10 @@ int main(int argc, char* argv[])
 	if(argc > 1 && !argumentsHandler(args)) {
 		return 0;
 	}
+
+	boost::filesystem::path full_path(boost::filesystem::current_path());
+	boost::filesystem::current_path(full_path.append("\.."));
+	std::cout << "Current path is : " << full_path << std::endl;
 
 	// Setup bad allocation handler
 	std::set_new_handler(badAllocationHandler);
